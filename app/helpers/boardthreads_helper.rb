@@ -1,0 +1,2 @@
+module BoardthreadsHelper
+end

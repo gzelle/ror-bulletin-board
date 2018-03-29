@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @board.name %>
+</p>
+
+<p>
+  <strong>Thread count:</strong>
+  <%= @board.thread_count%>
+</p>
+
+<p>
+  <strong>Post count:</strong>
+  <%= @board.post_count %>
+</p>
+
+    <% boardthreads = @board.boardthreads %>
+    <% boardthreads.each do |bthread| %>
+      <tr>
+        <td><%= link_to bthread.title, bthread %></td>
+      </tr>
+      <br>
+    <% end %>
+
+<br>
+<br>
+<%= link_to 'New Thread', new_board_boardthread_path(@board, @boardthread) %> |
+<%= link_to 'Edit', edit_board_path %> |
+<%= link_to 'Back', topic_boards_path(@board.topic_id) %> |
+<%= link_to 'Destroy', @board, method: :delete, data: { confirm: 'Are you sure?' } %>

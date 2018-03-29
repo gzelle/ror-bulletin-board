@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @topic.name %>
+</p>
+    <% boards = @topic.boards %>
+    <% boards.each do |board| %>
+      <tr>
+        <td><%= link_to board.name, board %></td>
+        <td><%= board.thread_count %></td>
+        <td><%= board.post_count %></td>
+      </tr>
+      <br>
+    <% end %>
+
+<%= link_to 'Add New Board', new_topic_board_path(@topic, @board) %> |
+<%= link_to 'Edit', edit_topic_path(@topic) %> |
+<%= link_to 'Back', topics_path %>

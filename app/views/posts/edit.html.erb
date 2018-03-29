@@ -1,0 +1,8 @@
+<% provide(:action, "update") %>
+
+<h1>Editing Post</h1>
+
+<%= render 'form', post: @post %>
+
+<%= link_to 'Destroy', @post, method: :delete, data: { confirm: 'Are you sure?' } %> |
+<%= link_to 'Back', posts_path %>

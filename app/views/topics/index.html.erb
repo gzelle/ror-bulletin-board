@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<% @topics.each do |topic| %>
+  <h1><%= link_to topic.name, topic %></h1>
+
+    <% @boards = topic.boards %>
+    <% @boards.each do |board| %>
+      <tr>
+        <td><%= link_to board.name, board %></td>
+        <td><%= board.thread_count %></td>
+        <td><%= board.post_count %></td>
+      </tr>
+      <br>
+    <% end %>
+<% end %>
+
+
+<br>
+<br>
+<%= link_to 'New Topic', new_topic_path %>

@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Boards</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Thread count</th>
+      <th>Post count</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @boards.each do |board| %>
+      <tr>
+        <td><%= link_to board.name, board %></td>
+        <td><%= board.thread_count %></td>
+        <td><%= board.post_count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Back', topics_path %>
+
+<br>
+
+

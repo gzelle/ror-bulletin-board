@@ -1,0 +1,18 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @boardthread.title %>
+</p>
+
+<% posts = @boardthread.posts %>
+<% posts.each do |post| %>
+  <tr>
+    <td><%= post.message %></td>
+  </tr>
+  <br>
+<% end %>
+
+<%= link_to 'New Post', new_boardthread_post_path(@boardthread, @post) %> |
+<%= link_to 'Edit', edit_boardthread_path(@boardthread) %> |
+<%= link_to 'Back', board_boardthreads_path(@boardthread.board_id) %>
