@@ -11,6 +11,7 @@
   </thead>
 
   <tbody>
+
     <% @boardthreads.each do |boardthread| %>
       <tr>
         <td><%= link_to boardthread.title, boardthread %></td>
@@ -23,4 +24,4 @@
 
 <br>
 
-<%= link_to 'New Boardthread', new_boardthread_path %>
+<%= link_to 'New Boardthread', new_boardthread_path %>s

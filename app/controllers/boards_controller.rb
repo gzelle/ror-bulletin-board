@@ -28,16 +28,18 @@ class BoardsController < ApplicationController
   # POST /boards
   # POST /boards.json
   def create
-    @topic = Topic.find(params[:topic_id])
-    @board = @topic.boards.build(board_params)
+    if current_user.administrator?
+      @topic = Topic.find(params[:topic_id])
+      @board = @topic.boards.build(board_params)
 
-    respond_to do |format|
-      if @board.save
-        format.html { redirect_to topic_boards_path, notice: 'Board was successfully created.' }
-        format.json { render :show, status: :created, location: @board }
-      else
-        format.html { render :new }
-        format.json { render json: @board.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if @board.save
+          format.html { redirect_to topic_boards_path, notice: 'Board was successfully created.' }
+          format.json { render :show, status: :created, location: @board }
+        else
+          format.html { render :new }
+          format.json { render json: @board.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -60,11 +62,13 @@ class BoardsController < ApplicationController
   # DELETE /boards/1
   # DELETE /boards/1.json
   def destroy
-    board = Board.find(params[:id])
-    @board.destroy
-    respond_to do |format|
-      format.html { redirect_to root_path, notice: 'Board was successfully destroyed.' }
-      format.json { head :no_content }
+    if current_user.administrator?
+      board = Board.find(params[:id])
+      @board.destroy
+      respond_to do |format|
+        format.html { redirect_to root_path, notice: 'Board was successfully destroyed.' }
+        format.json { head :no_content }
+      end
     end
   end
 

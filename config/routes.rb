@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 	root 'topics#index'
 	get 'home/index'
+	post '/users/banuser', to: 'users#banuser'
+	post '/users/unbanuser', to: 'users#unbanuser'
 
 	resources :posts
 	resources :users

@@ -35,5 +35,13 @@
   <%= @user.status %>
 </p>
 
+<% if current_user.moderator? || current_user.administrator? %>
+  <% if @user.normal? %>
+    <%= link_to 'Ban User to do'%>
+  <% else %>
+    <%= link_to 'Unban to do' %>
+  <% end %>
+<% end %>
+
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>

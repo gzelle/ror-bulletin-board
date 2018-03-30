@@ -4,5 +4,5 @@
 
 <%= render 'form', boardthread: @boardthread %>
 
-<%= link_to 'Show', @boardthread %> |
+<%= link_to 'Destroy', @boardthread, method: :delete, data: { confirm: 'Are you sure?' } %> |
 <%= link_to 'Back', boardthreads_path %>

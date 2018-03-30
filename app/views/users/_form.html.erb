@@ -11,20 +11,43 @@
     </div>
   <% end %>
 
+  Account Details
   <div class="field">
     <%= form.label :name %>
-    <%= form.text_field :name %>
+    <%= form.text_field :name, required: true %>
   </div>
 
   <div class="field">
     <%= form.label :email %>
-    <%= form.text_field :email %>
+    <%= form.text_field :email, required: true %>
   </div>
 
   <div class="field">
     <%= form.label :password %>
-    <%= form.password_field :password %>
+    <%= form.password_field :password, required: true %>
   </div>
+
+  User Details
+  <div class="field">
+    <%= form.label :about %>
+    <%= form.text_area :about, required: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :birthdate %>
+    <%= form.date_field :birthdate, required: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :hometown %>
+    <%= form.text_field :hometown, required: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :present_location %>
+    <%= form.text_field :present_location, required: true %>
+  </div>
+
 
   <div class="submit-field">
 	<%= form.submit %>

@@ -1,18 +1,35 @@
 <p id="notice"><%= notice %></p>
+<div class="container-fluid">
+	<p>
+	  <strong>Title:</strong>
+	  <%= @boardthread.title %>
+	</p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @boardthread.title %>
-</p>
-
-<% posts = @boardthread.posts %>
-<% posts.each do |post| %>
-  <tr>
-    <td><%= post.message %></td>
-  </tr>
-  <br>
+	<% posts = @boardthread.sort_posts %>
+	<% posts.each do |post| %>
+	  <tr>
+	  	<div class="board">
+		    <td><%= link_to post.post_user(post.user_id).name, user_path(post.user_id) %></td>&nbsp;
+		    <div class="tooltip">
+		    	<% user = @boardthread.find_user(post.user_id) %>
+		    	<%= user.about %>
+		    </div>
+		    <td><%= post.created_at %></td> :
+	    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	    	<td><%= post.message %></td>
+		</div>
+	  </tr>
+	  <br>
+	<% end %>
+</div>
+<% if current_user.moderator? || current_user.administrator? %>
+	To do:
+	if unlock
+		link_to 'Lock Thread', new_boardthread_post_path(@boardthread, @post)
+	else
+		link_to 'Unlock'
 <% end %>
-
+<br>
 <%= link_to 'New Post', new_boardthread_post_path(@boardthread, @post) %> |
 <%= link_to 'Edit', edit_boardthread_path(@boardthread) %> |
 <%= link_to 'Back', board_boardthreads_path(@boardthread.board_id) %>

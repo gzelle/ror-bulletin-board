@@ -65,7 +65,7 @@ class BoardthreadsController < ApplicationController
     boardthread = Boardthread.find(params[:id])
     @boardthread.destroy
     respond_to do |format|
-      format.html { redirect_to board_boardthreads_path, notice: 'Boardthread was successfully destroyed.' }
+      format.html { redirect_to board_boardthreads_path(boardthread.board_id), notice: 'Boardthread was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
