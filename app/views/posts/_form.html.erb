@@ -1,4 +1,4 @@
-<%= form_for(@post, url: { action: yield(:action) }) do |form| %>
+<%= form_for  @post, url: { controller: 'posts', action: yield(:action) } do |form| %>
   <% if post.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= form.label :message %>
-    <%= form.text_field :message, id: :post_message %>
+    <%= form.text_area :message, id: :post_message %>
   </div>
 
   <div class="actions">

@@ -2,8 +2,8 @@ class Board < ApplicationRecord
 	belongs_to :topic
 	has_many :boardthreads
 
-	def sort_threads
-		posts = self.boardthreads.posts
-		bthreads = Boardthread.includes(:posts).order("posts.created_at")
+	def postcount
+    	@boardthreads = self.boardthreads
+		@postcount = @boardthreads.inject(0) { |sum, b| sum + b.post_count }
 	end
 end

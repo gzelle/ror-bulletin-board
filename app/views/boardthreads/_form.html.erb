@@ -16,6 +16,16 @@
     <%= form.text_field :title, id: :boardthread_title %>
   </div>
 
+  <div class="field">
+    <%= form.label :status %>
+    <%= form.select :status, Boardthread.statuses.keys.to_a %>
+  </div>
+
+  <div class="field">
+    <%= form.label :threadtype %>
+    <%= form.select :threadtype, Boardthread.threadtypes.keys.to_a %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>

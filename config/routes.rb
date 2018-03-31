@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
 	root 'topics#index'
 	get 'home/index'
-	post '/users/banuser', to: 'users#banuser'
-	post '/users/unbanuser', to: 'users#unbanuser'
+	get '/users/manageuser/:id', to: 'users#manageuser', as: 'manage_user'
+	get '/boardthreads/managethread/:id', to: 'boardthreads#managethread', as: 'manage_thread'
 
 	resources :posts
 	resources :users

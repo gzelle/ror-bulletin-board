@@ -35,11 +35,20 @@
   <%= @user.status %>
 </p>
 
+<p>
+  <strong>Posts:</strong><br>
+  <% @user.posts.each do |post| %>
+    <% @boardthread = Boardthread.find(post.boardthread_id) %>
+    <%= link_to @boardthread.title, boardthread_path(@boardthread.id) %> <%= post.message %><br>
+  <% end %>
+</p>
+
+
 <% if current_user.moderator? || current_user.administrator? %>
   <% if @user.normal? %>
-    <%= link_to 'Ban User to do'%>
+    <%= link_to "Ban User", manage_user_path(@user) %>
   <% else %>
-    <%= link_to 'Unban to do' %>
+    <%= link_to 'Unban User', manage_user_path(@user) %>
   <% end %>
 <% end %>
 

@@ -10,15 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180327214309) do
+ActiveRecord::Schema.define(version: 20180331110143) do
 
   create_table "boards", force: :cascade do |t|
     t.string "name"
     t.integer "thread_count"
-    t.integer "post_count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "topic_id"
+    t.string "description"
     t.index ["topic_id"], name: "index_boards_on_topic_id"
   end
 
@@ -28,6 +28,9 @@ ActiveRecord::Schema.define(version: 20180327214309) do
     t.datetime "updated_at", null: false
     t.integer "board_id"
     t.integer "user_id"
+    t.integer "post_count"
+    t.integer "status"
+    t.integer "threadtype"
     t.index ["board_id"], name: "index_boardthreads_on_board_id"
     t.index ["user_id"], name: "index_boardthreads_on_user_id"
   end
@@ -62,6 +65,11 @@ ActiveRecord::Schema.define(version: 20180327214309) do
     t.string "encrypted_password", limit: 128
     t.string "confirmation_token", limit: 128
     t.string "remember_token", limit: 128
+    t.integer "post_count"
+    t.text "skype"
+    t.text "website"
+    t.integer "gender"
+    t.text "interests"
     t.index ["email"], name: "index_users_on_email"
     t.index ["remember_token"], name: "index_users_on_remember_token"
   end

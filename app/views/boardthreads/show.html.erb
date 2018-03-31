@@ -1,9 +1,17 @@
 <p id="notice"><%= notice %></p>
 <div class="container-fluid">
+	
 	<p>
-	  <strong>Title:</strong>
-	  <%= @boardthread.title %>
+	  <strong>Board:</strong>
+	  <%= @boardthread.boardname %>
 	</p>
+	<h3>
+	  <%= @boardthread.title %>
+	</h3>
+	<p>
+		<%= @boardthread.post_count %> posts, <%= @boardthread.status %>
+	</p>
+
 
 	<% posts = @boardthread.sort_posts %>
 	<% posts.each do |post| %>
@@ -12,7 +20,8 @@
 		    <td><%= link_to post.post_user(post.user_id).name, user_path(post.user_id) %></td>&nbsp;
 		    <div class="tooltip">
 		    	<% user = @boardthread.find_user(post.user_id) %>
-		    	<%= user.about %>
+		    	About me: <%= user.about %><br>
+		    	Posts: <%= user.post_count %>
 		    </div>
 		    <td><%= post.created_at %></td> :
 	    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -21,15 +30,18 @@
 	  </tr>
 	  <br>
 	<% end %>
+
+
 </div>
 <% if current_user.moderator? || current_user.administrator? %>
-	To do:
-	if unlock
-		link_to 'Lock Thread', new_boardthread_post_path(@boardthread, @post)
-	else
-		link_to 'Unlock'
+	<% if @boardthread.unlocked? %>
+		<%= link_to "Lock Thread", manage_thread_path(@boardthread) %>
+	<% else %>
+		<%= link_to 'Unlock Thread', manage_thread_path(@boardthread) %>
+	<% end %>
 <% end %>
 <br>
-<%= link_to 'New Post', new_boardthread_post_path(@boardthread, @post) %> |
+<%= link_to 'New Post', new_boardthread_post_path(@boardthread.id, @post) %> |
 <%= link_to 'Edit', edit_boardthread_path(@boardthread) %> |
-<%= link_to 'Back', board_boardthreads_path(@boardthread.board_id) %>
+<%= link_to 'Destroy', @boardthread, method: :delete, data: { confirm: 'Are you sure?' } %>
+<%= link_to 'Back', board_path(@boardthread.board_id) %>

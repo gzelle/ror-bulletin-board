@@ -1,6 +1,7 @@
 class BoardsController < ApplicationController
   before_action :set_board, only: [:show, :edit, :update, :destroy]
   before_action :prepare_topics
+  before_action :check_admin, except: [:show, :index]
 
   # GET /boards
   # GET /boards.json
@@ -28,18 +29,16 @@ class BoardsController < ApplicationController
   # POST /boards
   # POST /boards.json
   def create
-    if current_user.administrator?
-      @topic = Topic.find(params[:topic_id])
-      @board = @topic.boards.build(board_params)
+    @topic = Topic.find(params[:topic_id])
+    @board = @topic.boards.build(board_params)
 
-      respond_to do |format|
-        if @board.save
-          format.html { redirect_to topic_boards_path, notice: 'Board was successfully created.' }
-          format.json { render :show, status: :created, location: @board }
-        else
-          format.html { render :new }
-          format.json { render json: @board.errors, status: :unprocessable_entity }
-        end
+    respond_to do |format|
+      if @board.save
+        format.html { redirect_to topic_boards_path, notice: 'Board was successfully created.' }
+        format.json { render :show, status: :created, location: @board }
+      else
+        format.html { render :new }
+        format.json { render json: @board.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -61,16 +60,32 @@ class BoardsController < ApplicationController
 
   # DELETE /boards/1
   # DELETE /boards/1.json
-  def destroy
-    if current_user.administrator?
-      board = Board.find(params[:id])
-      @board.destroy
-      respond_to do |format|
-        format.html { redirect_to root_path, notice: 'Board was successfully destroyed.' }
-        format.json { head :no_content }
-      end
+  def destroy  
+    board = Board.find(params[:id])
+    @board.destroy
+    respond_to do |format|
+      format.html { redirect_to root_path, notice: 'Board was successfully destroyed.' }
+      format.json { head :no_content }
     end
   end
+
+  def check_admin
+    if action_name == "edit" || action_name == "update"
+      topic = Topic.find(params[:id])
+    else
+      topic = Topic.find(params[:topic_id])
+    end
+
+    if !current_user.administrator?
+      redirect_to topic_path(@topic.id), notice: "You have no rights to manage boards."
+    end
+
+    if current_user.banned?
+      redirect_to topic_path(topic.id), notice: "You are banned from managing boards.\nContact other administrators." 
+    end
+
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -88,6 +103,6 @@ class BoardsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def board_params
-      params.require(:board).permit(:name, :topic_id, :thread_count, :post_count)
+      params.require(:board).permit(:name, :description, :topic_id, :thread_count, :post_count)
     end
 end

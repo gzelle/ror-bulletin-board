@@ -9,30 +9,23 @@ class User < ApplicationRecord
 
   enum role: %w(poster moderator administrator)
   enum status: %w(normal banned)
+  enum gender: %w(male female unspecified)
 
   validates :name, :email, :about, :birthdate, :hometown, :present_location, presence: true
+
+  def ban(user)
+    user.status = 1
+    user.save
+  end
+
+  def unban(user)
+    user.status = 0
+    user.save
+  end
 
   private
     def password_optional?
       true
-    end
-
-    def ban(user)
-      if current_user.moderator? || current_user.administrator?
-        if user.normal?
-          user.status = 1
-          user.save
-        end
-      end
-    end
-
-    def unban(user)
-      if current_user.moderator? || current_user.administrator?
-        if user.banned?
-          user.status = 0
-          user.save
-        end
-      end
     end
 
 end

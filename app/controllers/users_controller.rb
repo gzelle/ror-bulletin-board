@@ -66,14 +66,42 @@ class UsersController < ApplicationController
     end
   end
 
-  def banuser(user)
-    #@user = User.find(params[:id])
-    current_user.ban(user)
-  end
+  def manageuser
+    user = User.find(params[:id])
+    if current_user.moderator? || current_user.administrator?
 
-  def unbanuser(user)
-    #@user = User.find(params[:id])
-    current_user.unban(user)
+      if current_user != user
+
+        if !current_user.banned?
+      
+          if user.normal?
+            respond_to do |format|
+              if current_user.ban(user)
+                format.html { redirect_to user_path, notice: 'User was successfully banned.' }
+                format.json { render :show, status: :ok, location: @user }
+              end
+            end
+
+          else
+            respond_to do |format|
+              if current_user.unban(user)
+                format.html { redirect_to user_path, notice: 'User was successfully unbanned.' }
+                format.json { render :show, status: :ok, location: @user }
+              end
+            end
+          end
+
+        else
+          flash.now[:notice] = "You are banned and lost admin/mod priveleges.\nContact other administrators."
+        end
+        
+      else
+        flash.now[:notice] = "You cannot ban yourself."
+      end
+
+    else
+      flash.now[:notice] = "You have no right to ban users."
+    end
   end
 
   private
@@ -84,7 +112,7 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :email, :password, :about, :birthdate, :hometown, :present_location, :role, :status)
+      params.require(:user).permit(:name, :email, :password, :about, :birthdate, :hometown, :present_location, :role, :status, :post_count)
     end
 
 end
