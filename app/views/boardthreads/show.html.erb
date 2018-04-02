@@ -1,19 +1,13 @@
 <p id="notice"><%= notice %></p>
 <div class="container-fluid">
 	
-	<p>
-	  <strong>Board:</strong>
-	  <%= @boardthread.boardname %>
-	</p>
-	<h3>
-	  <%= @boardthread.title %>
-	</h3>
-	<p>
-		<%= @boardthread.post_count %> posts, <%= @boardthread.status %>
-	</p>
-
-
-	<% posts = @boardthread.sort_posts %>
+	<p><strong>Board: </strong><%= @boardthread.boardname %></p>
+	<h3><%= @boardthread.title %></h3>
+	<p><%= @boardthread.post_count %> posts, <%= @boardthread.status %></p>
+	<br>
+	<br>
+	<hr>
+	<% posts = @boardthread.sort_posts.paginate(page: params[:page], per_page: 20) %>
 	<% posts.each do |post| %>
 	  <tr>
 	  	<div class="board">
@@ -23,14 +17,20 @@
 		    	About me: <%= user.about %><br>
 		    	Posts: <%= user.post_count %>
 		    </div>
-		    <td><%= post.created_at %></td> :
-	    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		    <td><%= post.created_at.strftime("%b %d, %Y  %I:%M:%S %P") %></td> : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	    	<td><%= post.message %></td>
-		</div>
+			</div>
 	  </tr>
-	  <br>
+	 	<hr>
+	<% end %>
+	<%= will_paginate posts %><br>
+
+	<% if @boardthread.unlocked? %>
+		<%= link_to 'New Post', new_boardthread_post_path(@boardthread.id, @post) %>
 	<% end %>
 
+	render partial: '/posts/post_form', post: @post, boardthread: @boardthread 
+	
 
 </div>
 <% if current_user.moderator? || current_user.administrator? %>
@@ -41,7 +41,7 @@
 	<% end %>
 <% end %>
 <br>
-<%= link_to 'New Post', new_boardthread_post_path(@boardthread.id, @post) %> |
+
 <%= link_to 'Edit', edit_boardthread_path(@boardthread) %> |
 <%= link_to 'Destroy', @boardthread, method: :delete, data: { confirm: 'Are you sure?' } %>
 <%= link_to 'Back', board_path(@boardthread.board_id) %>

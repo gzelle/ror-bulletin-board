@@ -1,25 +1,25 @@
 <p id="notice"><%= notice %></p>
 <div class="container">
-<% @topics.each do |topic| %>
-  <h1><%= link_to topic.name, topic %></h1>  
-  <% @boards = topic.boards %>
-  <% @boards.each_slice(6) do |boards| %>
-    <% boards.each do |board| %>
-    <div class="row board">
-      <div class="col-4">
-
-          <h5><%= link_to board.name, board %></h5>
-          <div class="tooltip">
-            <b>Description: </b><%= board.description %><br>
-            <b>Threads: </b><%= board.thread_count %><br>
-            <b>Posts: </b><%= board.postcount %>
-          </div>
-
-      </div>
+  <% @topics.each do |topic| %>
+    <div class="row">
+      <h1><%= link_to topic.name, topic %></h1>  
     </div>
-    <% end %>
+    <div class="row">
+      <% boards = topic.boards %>
+      <% boards.each do |board| %>
+        <div class="col-md-2">
+          <div class="board">
+            <h5><%= link_to board.name, board %></h5>
+            <div class="tooltip">
+              <b>Description: </b><%= board.description %><br>
+              <b>Threads: </b><%= board.thread_count %><br>
+              <b>Posts: </b><%= board.postcount %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
   <% end %>
-<% end %>
 </div>
 
 <br>

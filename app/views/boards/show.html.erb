@@ -1,31 +1,36 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Name:</strong>
+  <strong>Board:</strong>
   <%= @board.name %>
-</p>
-
-<p>
+  <br>
   <strong>Description:</strong>
   <%= @board.description %>
+  <br>
+  <strong>Threads: </strong><%= @board.thread_count%>, 
+  <strong>Posts: </strong>
 </p>
-
-<p>
-  <strong>Thread count:</strong>
-  <%= @board.thread_count%>
-</p>
-
-<p>
-  <strong>Post count:</strong>
-
-</p>
-    <% boardthreads = @board.boardthreads %>
-    <% boardthreads.each do |bthread| %>
+    
+    <% boardthreads = @board.sortthreads(0) %>  <!--sort sticky threads -->
+    <% boardthreads.each do |bthread| %> 
       <tr>
-        <td><%= link_to bthread.title, bthread %></td>
+        <td>📍 <%= link_to bthread.title, bthread %></td>
       </tr>
       <br>
     <% end %>
+    
+    <br>
+    <% boardthreads = @board.sortthreads(1) %>  <!--sort nonsticky threads -->
+    <% boardthreads = boardthreads.paginate(page: params[:page], per_page: 20) %>
+    <% boardthreads.each do |bthread| %>
+      <% if bthread.nonsticky? %>
+        <tr>
+          <td><%= link_to bthread.title, bthread %></td>
+        </tr>
+        <br>
+      <% end %>
+    <% end %>
+    <%= will_paginate boardthreads %><br>
 
 <br>
 <br>

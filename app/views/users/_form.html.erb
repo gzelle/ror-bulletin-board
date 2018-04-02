@@ -1,55 +1,86 @@
-<%= form_with(model: @user, local: true) do |form| %>
-  <% if @user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+<div class="row">
+  <div class="col-md-4  col-md-offset-4">
+    <%= form_with(model: @user, local: true) do |form| %>
+      <% if @user.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
 
-      <ul>
-      <% @user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+          <ul>
+          <% @user.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
       <% end %>
-      </ul>
-    </div>
-  <% end %>
 
-  Account Details
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name, required: true %>
+      Account Details
+      <div class="form-group">
+        <%= form.label :name %>
+        <%= form.text_field :name, required: true, class:"form-control" %>
+      </div>
+
+      <div class="form-group ">
+        <%= form.label :email %>
+        <%= form.text_field :email, required: true, class:"form-control", placeholder: "Email" %>
+      </div>
+
+      <div class="form-group ">
+        <%= form.label :password %>
+        <%= form.password_field :password, required: true, class:"form-control", placeholder: "Password" %>
+      </div>
+
+      User Details
+      <div class="form-group">
+        <%= form.label :about %>
+        <%= form.text_area :about, required: true, class:"form-control" %>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <%= form.label :gender %><br>
+          <%= form.select :gender, User.genders.keys.to_a, class:"custom-select" %>
+        </div>
+
+        <div class="form-group col-md-8"">
+          <%= form.label :birthdate %>
+          <%= form.date_field :birthdate, required: true, class:"form-control" %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :hometown %>
+        <%= form.text_field :hometown, required: true, class:"form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :present_location %>
+        <%= form.text_field :present_location, required: true, class:"form-control" %>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <%= form.label :skype %>
+          <%= form.text_field :skype, class:"form-control" %>
+        </div>
+
+        <div class="form-group col-md-6">
+          <%= form.label :website %>
+          <%= form.text_field :website, placeholder: "https://", class:"form-control" %>
+        </div>
+      </div>
+      
+
+      <div class="form-group">
+        <%= form.label :interests %>
+        <%= form.text_area :interests, class:"form-control" %>
+      </div>
+
+      <div class="submit-field">
+    	<%= form.submit "Sign Up", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+    <br>
   </div>
-
-  <div class="field">
-    <%= form.label :email %>
-    <%= form.text_field :email, required: true %>
-  </div>
-
-  <div class="field">
-    <%= form.label :password %>
-    <%= form.password_field :password, required: true %>
-  </div>
-
-  User Details
-  <div class="field">
-    <%= form.label :about %>
-    <%= form.text_area :about, required: true %>
-  </div>
-
-  <div class="field">
-    <%= form.label :birthdate %>
-    <%= form.date_field :birthdate, required: true %>
-  </div>
-
-  <div class="field">
-    <%= form.label :hometown %>
-    <%= form.text_field :hometown, required: true %>
-  </div>
-
-  <div class="field">
-    <%= form.label :present_location %>
-    <%= form.text_field :present_location, required: true %>
-  </div>
+</div>
 
 
-  <div class="submit-field">
-	<%= form.submit %>
-  </div>
-<% end %>

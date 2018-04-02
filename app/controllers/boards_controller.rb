@@ -1,3 +1,5 @@
+require 'will_paginate/array' 
+
 class BoardsController < ApplicationController
   before_action :set_board, only: [:show, :edit, :update, :destroy]
   before_action :prepare_topics
@@ -34,7 +36,7 @@ class BoardsController < ApplicationController
 
     respond_to do |format|
       if @board.save
-        format.html { redirect_to topic_boards_path, notice: 'Board was successfully created.' }
+        format.html { redirect_to topic_path(@topic.id), notice: 'Board was successfully created.' }
         format.json { render :show, status: :created, location: @board }
       else
         format.html { render :new }

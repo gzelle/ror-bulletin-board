@@ -1,46 +1,57 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Name:</strong>
-  <%= @user.name %>
+  <strong>Name: </strong><%= @user.name %>
 </p>
 
 <p>
-  <strong>About:</strong>
-  <%= @user.about %>
+  <strong>About:</strong> <%= @user.about %>
 </p>
 
 <p>
-  <strong>Birthdate:</strong>
-  <%= @user.birthdate %>
+  <strong>Birthdate:</strong> <%= @user.birthdate %>
 </p>
 
 <p>
-  <strong>Hometown:</strong>
-  <%= @user.hometown %>
+  <strong>Hometown:</strong> <%= @user.hometown %>
 </p>
 
 <p>
-  <strong>Present location:</strong>
-  <%= @user.present_location %>
+  <strong>Present location:</strong> <%= @user.present_location %>
 </p>
 
 <p>
-  <strong>Roles:</strong>
-  <%= @user.role %>
+  <strong>Roles:</strong> <%= @user.role %>
 </p>
 
 <p>
-  <strong>Status:</strong>
-  <%= @user.status %>
+  <strong>Status:</strong> <%= @user.status %>
+</p>
+
+<p>
+  <strong>Skype:</strong> <%= @user.skype %>
+</p>
+
+<p>
+  <strong>Website:</strong> <%= @user.website %>
+</p>
+
+<p>
+  <strong>Gender:</strong> <%= @user.gender %>
+</p>
+
+<p>
+  <strong>Interests:</strong> <%= @user.interests %>
 </p>
 
 <p>
   <strong>Posts:</strong><br>
-  <% @user.posts.each do |post| %>
+  <% @posts = @user.posts.paginate(page: params[:page], per_page: 20) %>
+  <% @posts.each do |post| %>
     <% @boardthread = Boardthread.find(post.boardthread_id) %>
     <%= link_to @boardthread.title, boardthread_path(@boardthread.id) %> <%= post.message %><br>
   <% end %>
+  <%= will_paginate @posts %><br>
 </p>
 
 

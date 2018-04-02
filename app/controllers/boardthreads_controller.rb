@@ -7,13 +7,14 @@ class BoardthreadsController < ApplicationController
   # GET /boardthreads.json
   def index
     @board = Board.find(params[:board_id])
-    @boardthreads = @board.boardthreads
+    @boardthreads = @board.boardthreads.paginate(page: params[:page], per_page: 5)
   end
 
   # GET /boardthreads/1
   # GET /boardthreads/1.json
   def show
-    Boardthread.find(params[:id])
+    @boardthread = Boardthread.find(params[:id])
+    @post = @boardthread.posts.build
   end
 
   # GET /boardthreads/new
@@ -34,15 +35,15 @@ class BoardthreadsController < ApplicationController
     @boardthread = @board.boardthreads.build(boardthread_params)
     @boardthread.user_id = @user.id
 
-      respond_to do |format|
-        if @boardthread.save
-          format.html { redirect_to board_path(@board.id), notice: 'Boardthread was successfully created.' }
-          format.json { render :show, status: :created, location: @boardthread }
-        else
-          format.html { render :new }
-          format.json { render json: @boardthread.errors, status: :unprocessable_entity }
-        end
+    respond_to do |format|
+      if @boardthread.save
+        format.html { redirect_to board_path(@board.id), notice: 'Boardthread was successfully created.' }
+        format.json { render :show, status: :created, location: @boardthread }
+      else
+        format.html { render :new }
+        format.json { render json: @boardthread.errors, status: :unprocessable_entity }
       end
+    end
 
   end
 

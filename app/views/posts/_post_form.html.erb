@@ -1,0 +1,11 @@
+<%= form_for(@post) do |form| %>
+
+  <div class="field">
+    <%= form.label :message %>
+    <%= form.text_area :message, placeholder: "Reply to the thread" %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Post", class: "btn btn-primary" %>
+  </div>
+<% end %>

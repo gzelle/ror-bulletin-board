@@ -1,3 +1,5 @@
+@import "bootstrap";
+
 body {
   background-color: #fff;
   color: #333;
@@ -81,42 +83,4 @@ div {
 
 label {
   display: block;
-}
-
-/* Remove the navbar's default margin-bottom and rounded borders */ 
-.navbar {
-  margin-bottom: 0;
-  border-radius: 0;
-}
-
-
-.board {
-    position:relative;
-}
-
-.tooltip { /* hide and position tooltip */
-  margin:0px 25px;
-  padding:5px;
-  border: 1px gray solid;
-  background-color:#ffffff;
-  color:#000000;
-  border-radius:5px;
-  opacity:25%;
-  position:absolute;
-  -webkit-transition: opacity 0.5s;
-  -moz-transition: opacity 0.5s;
-  -ms-transition: opacity 0.5s;
-  -o-transition: opacity 0.5s;
-  transition: opacity 0.5s;
-}
-
-.board:hover .tooltip { /* display tooltip on hover */
-    opacity:1;
-}
-
-.col-xs-2 {
-  border: 1px gray solid;
-  width:20%;
-  float:left;
-  margin: 2px;
 }

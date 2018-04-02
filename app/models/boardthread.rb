@@ -7,6 +7,7 @@ class Boardthread < ApplicationRecord
 	attribute :post_count, :integer, default: 0
 	enum status: %w(unlocked locked)
 	enum threadtype: %w(sticky nonsticky)
+  self.per_page = 20
 
 	def lock(boardthread)
     boardthread.status = 1

@@ -7,7 +7,7 @@ class PostsController < ApplicationController
   # GET /posts.json
   def index
     @boardthread = Boardthread.find(params[:boardthread_id])
-    @posts = @boardthread.posts
+    #@posts = @boardthread.posts.paginate(page: params[:page], per_page: 5)
   end
 
   # GET /posts/1
@@ -34,14 +34,20 @@ class PostsController < ApplicationController
     @post = @boardthread.posts.build(post_params)
     @post.user_id = @user.id
 
-    respond_to do |format|
-      if @post.save
-        format.html { redirect_to boardthread_path(@boardthread.id), notice: 'Post was successfully created.' }
-        format.json { render :show, status: :created, location: @post }
-      else
-        format.html { render :new }
-        format.json { render json: @post.errors, status: :unprocessable_entity }
+    if @boardthread.unlocked?
+
+      respond_to do |format|
+        if @post.save
+          format.html { redirect_to boardthread_path(@boardthread.id), notice: 'Post was successfully created.' }
+          format.json { render :show, status: :created, location: @post }
+        else
+          format.html { render boardthread_path(@boardthread.id) }
+          format.json { render json: @post.errors, status: :unprocessable_entity }
+        end
       end
+
+    else
+      redirect_to boardthread_path(@boardthread.id), notice: "Thread is locked. Contact a mod or administrator." 
     end
 
   end
@@ -91,6 +97,10 @@ class PostsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_post
       @post = Post.find(params[:id])
+    end
+
+    def set_boardthread
+      @boardthread = Boardthread.find(params[:boardthread_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
