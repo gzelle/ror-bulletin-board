@@ -6,7 +6,8 @@
 }
 
 .tooltip { /* hide and position tooltip */
-  margin:0px 25px;
+  margin:0px 100px;
+  width: 100%;
   padding:5px;
   border: 1px gray solid;
   background-color:#ffffff;
@@ -41,4 +42,18 @@
 
 hr {
 	margin: 5px;
+}
+
+.thread-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.poster-details, .poster-date {
+  width: 15%;
+}
+.poster-message {
+  padding-left: 20px;
+  width: 70%;
 }

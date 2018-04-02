@@ -1,4 +1,4 @@
-<%= form_with(model: @user, local: true) do |form| %>
+<%= form_with(model: @user, local: true, html: { multipart: true }) do |form| %>
   <% if @user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
@@ -10,6 +10,11 @@
       </ul>
     </div>
   <% end %>
+
+  <div class="form-group">
+    <%= form.label :avatar %><br>
+    <%= form.file_field :avatar %>
+  </div>
 
   <div class="field">
     <%= form.label :name %>
@@ -34,6 +39,35 @@
   <div class="field">
     <%= form.label :present_location %>
     <%= form.text_field :present_location %>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <%= form.label :gender %><br>
+      <%= form.select :gender, User.genders.keys.to_a, class:"custom-select" %>
+    </div>
+
+    <div class="form-group col-md-8"">
+      <%= form.label :birthdate %>
+      <%= form.date_field :birthdate, required: true, class:"form-control" %>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <%= form.label :skype %>
+      <%= form.text_field :skype, class:"form-control" %>
+    </div>
+
+    <div class="form-group col-md-6">
+      <%= form.label :website %>
+      <%= form.text_field :website, placeholder: "https://", class:"form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :interests %>
+    <%= form.text_area :interests, class:"form-control" %>
   </div>
 
   <div class="submit-field">

@@ -33,7 +33,10 @@ gem 'bootstrap-sass', '~> 3.3.7'
 gem 'jquery-rails'
 gem 'clearance'
 gem 'will_paginate', '~> 3.1.0'
-#gem 'avatars_for_rails'
+gem 'carrierwave'
+gem 'mini_magick'
+gem 'ranked-model'
+gem 'jquery-ui-rails'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

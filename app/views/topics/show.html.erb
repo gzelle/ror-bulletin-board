@@ -9,6 +9,7 @@
       <div class="card">
         <div class="card-body">
           <tr>
+            <td><%= image_tag board.photo.thumb.url unless board.photo.blank? %></td>
             <td><%= link_to board.name, board %></td>
             <td><%= board.thread_count %></td>
             <td></td>

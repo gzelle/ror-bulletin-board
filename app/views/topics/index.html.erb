@@ -9,6 +9,7 @@
       <% boards.each do |board| %>
         <div class="col-md-2">
           <div class="board">
+            <td><%= image_tag board.photo.thumb.url unless board.photo.blank? %></td>
             <h5><%= link_to board.name, board %></h5>
             <div class="tooltip">
               <b>Description: </b><%= board.description %><br>

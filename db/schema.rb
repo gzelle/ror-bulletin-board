@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180331110143) do
+ActiveRecord::Schema.define(version: 20180402132645) do
 
   create_table "boards", force: :cascade do |t|
     t.string "name"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20180331110143) do
     t.datetime "updated_at", null: false
     t.integer "topic_id"
     t.string "description"
+    t.string "photo"
     t.index ["topic_id"], name: "index_boards_on_topic_id"
   end
 
@@ -70,6 +71,7 @@ ActiveRecord::Schema.define(version: 20180331110143) do
     t.text "website"
     t.integer "gender"
     t.text "interests"
+    t.string "avatar"
     t.index ["email"], name: "index_users_on_email"
     t.index ["remember_token"], name: "index_users_on_remember_token"
   end

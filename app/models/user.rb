@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   include Clearance::User
+  mount_uploader :avatar, AvatarUploader
   has_many :boardthreads
   has_many :posts
   attribute :role, :integer, default: 0

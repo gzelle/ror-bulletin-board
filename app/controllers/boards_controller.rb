@@ -72,11 +72,7 @@ class BoardsController < ApplicationController
   end
 
   def check_admin
-    if action_name == "edit" || action_name == "update"
-      topic = Topic.find(params[:id])
-    else
-      topic = Topic.find(params[:topic_id])
-    end
+    topic = Topic.find(@board.topic_id)
 
     if !current_user.administrator?
       redirect_to topic_path(@topic.id), notice: "You have no rights to manage boards."
@@ -105,6 +101,6 @@ class BoardsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def board_params
-      params.require(:board).permit(:name, :description, :topic_id, :thread_count, :post_count)
+      params.require(:board).permit(:photo, :name, :description, :topic_id, :thread_count, :post_count)
     end
 end

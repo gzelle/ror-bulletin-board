@@ -1,11 +1,11 @@
 class Board < ApplicationRecord
 	belongs_to :topic
 	has_many :boardthreads
+	mount_uploader :photo, PhotoUploader
 
 	def postcount
     	@boardthreads = self.boardthreads
     	@boardthreads.sum("post_count")
-		#@postcount = @boardthreads.inject(0) { |sum, b| sum + b.post_count }
 	end
 
 	def sortthreads(type)

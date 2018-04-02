@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-4  col-md-offset-4">
-    <%= form_with(model: @user, local: true) do |form| %>
+    <%= form_with(model: @user, local: true, html: { multipart: true }) do |form| %>
       <% if @user.errors.any? %>
         <div id="error_explanation">
           <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
@@ -12,6 +12,11 @@
           </ul>
         </div>
       <% end %>
+
+      <div class="form-group">
+        <%= form.label :avatar %><br>
+        <%= form.file_field :avatar %>
+      </div>
 
       Account Details
       <div class="form-group">
