@@ -22,7 +22,8 @@
   </div>
 
   <% if action = "edit" %>
-    TOPIC HERE
+      <%= form.label :topic %>
+      <%= form.collection_select :topic_id, Topic.order(:name),:id,:name, include_blank: "Please select a Topic" %>
   <% end %>
 
   <div class="field">

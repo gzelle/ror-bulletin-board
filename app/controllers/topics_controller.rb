@@ -1,5 +1,6 @@
 class TopicsController < ApplicationController
   before_action :set_topic, only: [:show, :edit, :update, :destroy]
+  before_action :check_admin, except: [:show, :index]
 
   # GET /topics
   # GET /topics.json
@@ -62,6 +63,17 @@ class TopicsController < ApplicationController
       format.html { redirect_to topics_url, notice: 'Topic was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def check_admin
+    if !current_user.administrator?
+      redirect_to topics_path, notice: "You have no rights to manage boards."
+    end
+
+    if current_user.banned?
+      redirect_to topics_path, notice: "You are banned from managing topics.\nContact other administrators." 
+    end
+
   end
 
   private

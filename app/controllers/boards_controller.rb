@@ -73,7 +73,7 @@ class BoardsController < ApplicationController
   end
 
   def check_admin
-    if action = "edit"
+    if action_name == "edit"
       topic = Topic.find(@board.topic_id)
     else
       topic = Topic.find(params[:topic_id])

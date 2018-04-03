@@ -25,4 +25,7 @@
 
 <br>
 <br>
-<%= link_to 'New Topic', new_topic_path %>
+<% if current_user.administrator? %>
+  <%= link_to 'New Topic', new_topic_path %>
+<% end %>
+
