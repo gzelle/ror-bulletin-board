@@ -4,7 +4,17 @@
 	
 	<p><strong>Board: </strong><%= @boardthread.boardname %></p>
 	<h3><%= @boardthread.title %></h3>
-	<p><%= @boardthread.post_count %> posts, <%= @boardthread.status %></p>
+	<p><%= @boardthread.post_count %> posts, <%= @boardthread.status.capitalize %>
+		<% if current_user.moderator? || current_user.administrator? %>
+			<% if @boardthread.unlocked? %>
+				<%= link_to "(Lock Thread?)", manage_thread_path(@boardthread) %>
+			<% else %>
+				<%= link_to '(Unlock)', manage_thread_path(@boardthread) %>
+			<% end %>
+		<% end %>
+		<br>
+	</p>
+
 	<br>
 	<br>
 	<hr>
@@ -27,7 +37,7 @@
 					<td><%= post.created_at.strftime("%b %d, %Y  %I:%M:%S %P") %></td>
 				</div>
 			  <div class="poster-message">
-		    	<td><%= post.message %></td>
+		    	<td><%= markdown(post.message) %></td>
 				</div>
 			</div>
 	  </tr>
@@ -36,22 +46,13 @@
 	<%= will_paginate posts %><br>
 
 	<% if @boardthread.unlocked? %>
-		<%= link_to 'New Post', new_boardthread_post_path(@boardthread.id, @post) %>
+		<%= render partial: '/posts/post_form', post: @post, boardthread: @boardthread %>
 	<% end %>
-
-	render partial: '/posts/post_form', post: @post, boardthread: @boardthread 
-	
-
+	<br><br>
 </div>
-<% if current_user.moderator? || current_user.administrator? %>
-	<% if @boardthread.unlocked? %>
-		<%= link_to "Lock Thread", manage_thread_path(@boardthread) %>
-	<% else %>
-		<%= link_to 'Unlock Thread', manage_thread_path(@boardthread) %>
-	<% end %>
-<% end %>
-<br>
+
 
 <%= link_to 'Edit', edit_boardthread_path(@boardthread) %> |
 <%= link_to 'Destroy', @boardthread, method: :delete, data: { confirm: 'Are you sure?' } %>
 <%= link_to 'Back', board_path(@boardthread.board_id) %>
+<br><br>

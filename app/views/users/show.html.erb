@@ -1,5 +1,4 @@
 <p id="notice"><%= notice %></p>
-<% @user.avatar.recreate_versions! %>
 <p>
   <%= image_tag @user.avatar.profile.url unless @user.avatar.blank? %>
 </p>

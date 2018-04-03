@@ -21,6 +21,10 @@
     <%= form.text_field :name, id: :board_name %>
   </div>
 
+  <% if action = "edit" %>
+    TOPIC HERE
+  <% end %>
+
   <div class="field">
     <%= form.label :description %>
     <%= form.text_field :description, id: :board_description %>

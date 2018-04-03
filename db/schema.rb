@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180402132645) do
+ActiveRecord::Schema.define(version: 20180402212943) do
 
   create_table "boards", force: :cascade do |t|
     t.string "name"
@@ -20,6 +20,9 @@ ActiveRecord::Schema.define(version: 20180402132645) do
     t.integer "topic_id"
     t.string "description"
     t.string "photo"
+    t.integer "row_order"
+    t.integer "position"
+    t.integer "sort"
     t.index ["topic_id"], name: "index_boards_on_topic_id"
   end
 

@@ -4,21 +4,19 @@
   <strong>Name:</strong>
   <%= @topic.name %>
 </p>
-    <% boards = @topic.boards %>
-    <% boards.each do |board| %>
-      <div class="card">
-        <div class="card-body">
-          <tr>
-            <td><%= image_tag board.photo.thumb.url unless board.photo.blank? %></td>
-            <td><%= link_to board.name, board %></td>
-            <td><%= board.thread_count %></td>
-            <td></td>
-          </tr>
-        </div>
-      </div>
-      <br>
-    <% end %>
+  <div class="container">
+    <ul class="sortable">
+      <% boards = @topic.boards %>
+      <% boards.each do |board| %>
+          <li id="<%= board.sortable_id %>" class="ui-state-default">
+            <%= image_tag board.photo.thumb.url unless board.photo.blank? %><br>
+            <%= link_to board.name, board %>
+          </li>
+        <% end %>
+    </ul>
+  </div>
 
+<br><br>
 <% if current_user.administrator? %>
   <%= link_to 'Add New Board', new_topic_board_path(@topic, @board) %> |
   <%= link_to 'Edit', edit_topic_path(@topic) %> |

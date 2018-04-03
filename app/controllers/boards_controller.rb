@@ -10,6 +10,7 @@ class BoardsController < ApplicationController
   def index
     @topic = Topic.find(params[:topic_id])
     @boards = @topic.boards
+    @boards = Board.order(:sort).all
   end
 
   # GET /boards/1
@@ -72,7 +73,12 @@ class BoardsController < ApplicationController
   end
 
   def check_admin
-    topic = Topic.find(@board.topic_id)
+    if action = "edit"
+      topic = Topic.find(@board.topic_id)
+    else
+      topic = Topic.find(params[:topic_id])
+    end
+
 
     if !current_user.administrator?
       redirect_to topic_path(@topic.id), notice: "You have no rights to manage boards."
@@ -82,6 +88,14 @@ class BoardsController < ApplicationController
       redirect_to topic_path(topic.id), notice: "You are banned from managing boards.\nContact other administrators." 
     end
 
+  end
+
+  def update_row_order
+    @board = Board.find(board_params[:board_id])
+    @board.row_order_position = board_params[:row_order_position]
+    @board.save
+
+    render nothing: true # this is a POST action, updates sent via AJAX, no view rendered
   end
 
 
@@ -101,6 +115,6 @@ class BoardsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def board_params
-      params.require(:board).permit(:photo, :name, :description, :topic_id, :thread_count, :post_count)
+      params.require(:board).permit(:photo, :name, :description, :topic_id, :thread_count, :post_count, :position)
     end
 end

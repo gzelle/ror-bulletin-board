@@ -1,4 +1,6 @@
 class Board < ApplicationRecord
+	include RailsSortable::Model
+  	set_sortable :sort, without_updating_timestamps: true
 	belongs_to :topic
 	has_many :boardthreads
 	mount_uploader :photo, PhotoUploader

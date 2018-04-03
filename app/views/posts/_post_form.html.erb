@@ -1,11 +1,17 @@
-<%= form_for(@post) do |form| %>
+<%= form_for([@boardthread, @boardthread.posts.new]) do |form| %>
+<div class="thread-container">
+	<div class="poster-details">
+	</div>
+	<div class="poster-date">
+	</div>
+	<div class="poster-message">
+		<div class="form-group">
+			<%= form.text_area :message, placeholder: "Reply to the thread", class:"form-control"%>
+		</div>
 
-  <div class="field">
-    <%= form.label :message %>
-    <%= form.text_area :message, placeholder: "Reply to the thread" %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit "Post", class: "btn btn-primary" %>
-  </div>
+		<div class="actions">
+			<%= form.submit "Post", class: "btn btn-primary" %>
+		</div>
+	</div>
+</div>
 <% end %>
