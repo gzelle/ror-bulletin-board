@@ -8,33 +8,54 @@
   <%= @board.description %>
   <br>
   <strong>Threads: </strong><%= @board.thread_count%>, 
-  <strong>Posts: </strong>
+  <strong>Posts: </strong><%= @board.postcount%>
 </p>
-    
-    <% boardthreads = @board.sortthreads(0) %>  <!--sort sticky threads -->
-    <% boardthreads.each do |bthread| %> 
-      <tr>
-        <td>📍 <%= link_to bthread.title, bthread %></td>
-      </tr>
-      <br>
-    <% end %>
-    
-    <br>
-    <% boardthreads = @board.sortthreads(1) %>  <!--sort nonsticky threads -->
-    <% boardthreads = boardthreads.paginate(page: params[:page], per_page: 20) %>
-    <% boardthreads.each do |bthread| %>
-      <% if bthread.nonsticky? %>
-        <tr>
-          <td><%= link_to bthread.title, bthread %></td>
-        </tr>
-        <br>
-      <% end %>
-    <% end %>
-    <%= will_paginate boardthreads %><br>
+    <div>
+      <div class="sticky-threads">
+        <h4 class="white">Sticky Threads</h4>
+        <% boardthreads = @board.sortthreads(0) %>  <!--0: sort sticky threads -->
+        <div class="sticky-thread">
+          <% boardthreads.each do |bthread| %> 
+            <tr>
+              <td>📍 <%= link_to bthread.title, bthread %></td>&nbsp;
+              <% bthread.locked? ? badge="badge badge-dark" : badge="badge badge-light" %>
+              <span class="<%="#{badge}"%>"><%= bthread.status %></span><br>
+              <td><%= User.find(bthread.latest_post.user_id).name unless bthread.latest_post.blank? %></td>
+              <td><%= bthread.latest_post.created_at unless bthread.latest_post.blank? %></td>
 
+            </tr>
+            <br>
+            <hr>
+          <% end %>
+        </div>
+      </div>
+      <br>
+      <div class="nonsticky-threads">
+        <h4 class="white">Normal Threads</h4>
+        <% boardthreads = @board.sortthreads(1) %>  <!--1: sort nonsticky threads -->
+        <% boardthreads = boardthreads.paginate(page: params[:page], per_page: 20) %>
+         <div class="nonsticky-thread">
+          <% boardthreads.each do |bthread| %>
+            <% if bthread.nonsticky? %>
+              <tr>
+                <td><%= link_to bthread.title, bthread %></td>&nbsp;
+                <% bthread.locked? ? badge="badge badge-dark" : badge="badge badge-light" %>
+                <span class="<%="#{badge}"%>"><%= bthread.status %></span><br>
+                <td><%= User.find(bthread.latest_post.user_id).name unless bthread.latest_post.blank? %></td>
+                <td><%= bthread.latest_post.created_at unless bthread.latest_post.blank? %></td>
+              </tr>
+              <br>
+              <hr class="non">
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+      <%= will_paginate boardthreads %><br>
+    </div>
+
+<%= link_to 'New Thread', new_board_boardthread_path(@board.id, @boardthread), class:"btn btn-success" %> | 
+<%= link_to 'Edit Board', edit_board_path, class:"btn btn-primary" %>
+<%= link_to 'Destroy Board', @board, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-danger" %>
+<%= link_to 'Back', :back %>
 <br>
 <br>
-<%= link_to 'New Thread', new_board_boardthread_path(@board.id, @boardthread) %> |
-<%= link_to 'Edit', edit_board_path %> |
-<%= link_to 'Back', topic_boards_path(@board.topic_id) %> |
-<%= link_to 'Destroy', @board, method: :delete, data: { confirm: 'Are you sure?' } %>

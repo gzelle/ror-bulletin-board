@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-	<title>BulletinBoard</title>
+	<title>Bulletin Board</title>
 	<%= csrf_meta_tags %>
 
 	<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -10,30 +10,31 @@
 
   <body>
 	<nav class="navbar navbar-inverse">
-	  <div class="container-fluid">
-			<div class="navbar-header">
-			  <%= link_to 'Bulletin Board System', root_path, class: 'navbar-brand' %>
+		<div class="nav navbar-nav">
+			<div class="navbar-details">
+				<h2><%= link_to 'Bulletin Board System', root_path, class: 'navbar-brand' %></h2>
 			</div>
-			<ul class="nav navbar-nav">
-				<% if signed_in? %>
-					<% unless !current_user.administrator? %>
-					  <li><a href="#">Home</a></li>
-					  <li><%= link_to 'Users', users_path %></li>
-					  <li><%= link_to 'Boards', users_path %></li>
-				  <% end %>
-				<% end %>
-			</ul>
-			<ul class="nav navbar-nav navbar-right">
-				<% if signed_in? %>
-				  <li class="nav-item"><%= link_to "Signed in as #{current_user.name}", '#' %></li>
-				  <li class="nav-item"><%= link_to 'View Profile', user_path(current_user) %></li>
-				  <li class="nav-item"><%= link_to 'Log out', sign_out_path, method: :delete %></li>
-				<% else %>
-				  <li><a href="<%= sign_in_path %>"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-				  <li><a href="<%= sign_up_path %>"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-				<% end %>
-			</ul>
-	  </div>
+		</div>
+		<div class="nav navbar-nav navbar-right">
+			<% if signed_in? %>
+				<div class="user-nav">
+					<div class="user-nav-row">
+						<div class="user-nav-cell">
+				        	<%= image_tag current_user.avatar.profile.url unless current_user.avatar.blank? %>
+				        </div>
+						  <div class="user-nav-cell">
+						  	Hello, <%= current_user.name %>!<br>
+						  	<%= link_to 'Profile', user_path(current_user) %><br>
+						  	<%= link_to 'Log out', sign_out_path, method: :delete %>
+						  </div>
+					</div>
+				</div>
+			<% else %>
+			  <a href="<%= sign_in_path %>"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+			  <a href="<%= sign_up_path %>"><span class="glyphicon glyphicon-user"></span> Sign Up</a>
+			<% end %>
+		</div>
+
 	</nav>
 
 	<div class="container-fluid">
@@ -44,6 +45,8 @@
 	  <% end %>
 	  <%= yield %>
 	</div>
+
+	
   </body>
 
 </html>

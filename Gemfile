@@ -35,10 +35,11 @@ gem 'clearance'
 gem 'will_paginate', '~> 3.1.0'
 gem 'carrierwave'
 gem 'mini_magick'
-gem 'rails_sortable'
+gem 'acts_as_list'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'redcarpet'
+gem 'rmagick'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

@@ -4,7 +4,9 @@
 	
 	<p><strong>Board: </strong><%= @boardthread.boardname %></p>
 	<h3><%= @boardthread.title %></h3>
-	<p><%= @boardthread.post_count %> posts, <%= @boardthread.status.capitalize %>
+	<% @boardthread.locked? ? badge="badge badge-dark" : badge="badge badge-light" %>
+	<p><%= @boardthread.post_count %> post/s, 
+	<span class="<%="#{badge}"%>"><%= @boardthread.status.capitalize %></span>
 		<% if current_user.moderator? || current_user.administrator? %>
 			<% if @boardthread.unlocked? %>
 				<%= link_to "(Lock Thread?)", manage_thread_path(@boardthread) %>
@@ -52,7 +54,7 @@
 </div>
 
 
-<%= link_to 'Edit', edit_boardthread_path(@boardthread) %> |
-<%= link_to 'Destroy', @boardthread, method: :delete, data: { confirm: 'Are you sure?' } %>
+<%= link_to 'Edit Thread', edit_boardthread_path(@boardthread), class:"btn btn-primary" %>
+<%= link_to 'Destroy Thread', @boardthread, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-danger" %>
 <%= link_to 'Back', board_path(@boardthread.board_id) %>
 <br><br>

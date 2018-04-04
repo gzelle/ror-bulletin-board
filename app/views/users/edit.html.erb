@@ -11,69 +11,71 @@
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= form.label :avatar %><br>
-    <%= form.file_field :avatar %>
-  </div>
+  <div class="row">
+    <div class="user-container">
+      <div class="user-edit-info">
+        <div class="form-group col-md-8">
+          <%= form.label :avatar %><br>
+          <%= form.file_field :avatar, class:"form-control" %>
+        </div>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
+        <div class="form-group col-md-8">
+          <%= form.label :name %>
+          <%= form.text_field :name, class:"form-control" %>
+        </div>
+        <br>
+        <div class="form-group col-md-8">
+          <%= form.label :about %>
+          <%= form.text_area :about, class:"form-control" %>
+        </div>
 
-  <div class="field">
-    <%= form.label :about %>
-    <%= form.text_area :about %>
-  </div>
+        <div class="form-group col-md-8">
+          <%= form.label :birthdate %>
+          <%= form.date_field :birthdate, class:"form-control" %>
+        </div>
 
-  <div class="field">
-    <%= form.label :birthdate %>
-    <%= form.date_field :birthdate %>
-  </div>
+        <div class="form-group col-md-8">
+          <%= form.label :hometown %>
+          <%= form.text_field :hometown, class:"form-control" %>
+        </div>
 
-  <div class="field">
-    <%= form.label :hometown %>
-    <%= form.text_field :hometown %>
-  </div>
+        <div class="form-group col-md-8">
+          <%= form.label :present_location %>
+          <%= form.text_field :present_location, class:"form-control" %>
+        </div>
+      </div>
 
-  <div class="field">
-    <%= form.label :present_location %>
-    <%= form.text_field :present_location %>
-  </div>
+      <div class="user-edit-optional">
+        <h5 class="col-md-8">Optional Details:</h5>
+        <div class="form-group col-md-8">
+          <%= form.label :gender %><br>
+          <%= form.select :gender, User.genders.keys.to_a, class:"custom-select" %>
+        </div>
 
-  <div class="form-row">
-    <div class="form-group col-md-4">
-      <%= form.label :gender %><br>
-      <%= form.select :gender, User.genders.keys.to_a, class:"custom-select" %>
+        <div class="form-group col-md-8">
+          <%= form.label :skype %>
+          <%= form.text_field :skype, class:"form-control" %>
+        </div>
+
+        <div class="form-group col-md-8">
+          <%= form.label :website %>
+          <%= form.text_field :website, placeholder: "https://", class:"form-control" %>
+        </div>
+
+        <div class="form-group col-md-8">
+          <%= form.label :interests %>
+          <%= form.text_area :interests, class:"form-control" %>
+        </div>
+
+        <div class="submit-field col-md-8">
+          <%= form.submit "Update User", class: "btn btn-primary"  %>
+        </div>
+      </div>
     </div>
-
-    <div class="form-group col-md-8"">
-      <%= form.label :birthdate %>
-      <%= form.date_field :birthdate, required: true, class:"form-control" %>
-    </div>
   </div>
 
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <%= form.label :skype %>
-      <%= form.text_field :skype, class:"form-control" %>
-    </div>
-
-    <div class="form-group col-md-6">
-      <%= form.label :website %>
-      <%= form.text_field :website, placeholder: "https://", class:"form-control" %>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :interests %>
-    <%= form.text_area :interests, class:"form-control" %>
-  </div>
-
-  <div class="submit-field">
-	<%= form.submit %>
-  </div>
 <% end %>
 
-<%= link_to 'Show', @post %> |
-<%= link_to 'Back', posts_path %>
+<%= link_to 'Show', @user %> |
+<%= link_to 'Back', :back %>
+<br><br>

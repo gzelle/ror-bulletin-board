@@ -1,69 +1,51 @@
 <p id="notice"><%= notice %></p>
-<p>
-  <%= image_tag @user.avatar.profile.url unless @user.avatar.blank? %>
-</p>
-<p>
-  <strong>Name: </strong><%= @user.name %>
-</p>
+<div class="user-container">
+  <div class="user-details">
+    <p><%= image_tag @user.avatar.profile.url unless @user.avatar.blank? %></p>
+    <% if current_user.moderator? || current_user.administrator? %>
+      <% if @user.normal? %>
+        <%= link_to "Ban User", manage_user_path(@user), class:"btn btn-danger" %>
+      <% else %>
+        <%= link_to 'Unban User', manage_user_path(@user), class:"btn btn-success" %>
+      <% end %>
+    <% end %>
+    <br><br>
+    <strong>Name: </strong><%= @user.name %><br>
+    <strong>About:</strong> <%= @user.about %><br>
+    <strong>Birthdate:</strong> <%= @user.birthdate %><br>
+    <strong>Hometown:</strong> <%= @user.hometown %><br>
+    <strong>Present location:</strong> <%= @user.present_location %><br>
+    <strong>Roles:</strong> <%= @user.role.capitalize unless @user.role.blank? %><br>
+    <strong>Status:</strong> <%= @user.status %><br>
+    <strong>Skype:</strong> <%= @user.skype %><br>
+    <strong>Website:</strong> <%= @user.website %><br>
+    <strong>Gender:</strong> <%= @user.gender.capitalize unless @user.gender.blank? %><br>
+    <strong>Interests:</strong> <%= @user.interests %><br><br>
+    <%= link_to 'Edit', edit_user_path(@user) %> | <%= link_to 'Back', :back %>
+  </div>
 
-<p>
-  <strong>About:</strong> <%= @user.about %>
-</p>
+  <div class="user-posts">
+    <h4>Posts</h4><br>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th width="30%">Thread name</th>
+          <th width="70%">Post</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @posts = @user.posts.order("created_at DESC").paginate(page: params[:page], per_page: 20) %>
+        <% @posts.each do |post| %>
+        <% @boardthread = Boardthread.find(post.boardthread_id) %>
+        <tr>
+          <td width="30%"><%= link_to @boardthread.title, boardthread_path(@boardthread.id) %></td>
+          <td width="70%"><%= post.message %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= will_paginate @posts %><br>
+  </div>
+</div>
 
-<p>
-  <strong>Birthdate:</strong> <%= @user.birthdate %>
-</p>
-
-<p>
-  <strong>Hometown:</strong> <%= @user.hometown %>
-</p>
-
-<p>
-  <strong>Present location:</strong> <%= @user.present_location %>
-</p>
-
-<p>
-  <strong>Roles:</strong> <%= @user.role %>
-</p>
-
-<p>
-  <strong>Status:</strong> <%= @user.status %>
-</p>
-
-<p>
-  <strong>Skype:</strong> <%= @user.skype %>
-</p>
-
-<p>
-  <strong>Website:</strong> <%= @user.website %>
-</p>
-
-<p>
-  <strong>Gender:</strong> <%= @user.gender %>
-</p>
-
-<p>
-  <strong>Interests:</strong> <%= @user.interests %>
-</p>
-
-<p>
-  <strong>Posts:</strong><br>
-  <% @posts = @user.posts.paginate(page: params[:page], per_page: 20) %>
-  <% @posts.each do |post| %>
-    <% @boardthread = Boardthread.find(post.boardthread_id) %>
-    <%= link_to @boardthread.title, boardthread_path(@boardthread.id) %> <%= post.message %><br>
-  <% end %>
-  <%= will_paginate @posts %><br>
-</p>
-
-
-<% if current_user.moderator? || current_user.administrator? %>
-  <% if @user.normal? %>
-    <%= link_to "Ban User", manage_user_path(@user) %>
-  <% else %>
-    <%= link_to 'Unban User', manage_user_path(@user) %>
-  <% end %>
-<% end %>
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<br><br>

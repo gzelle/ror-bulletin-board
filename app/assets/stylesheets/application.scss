@@ -2,6 +2,14 @@
 @import "bootstrap";
 
 
+a {
+  color: none !important;
+}
+
+h2 .topic-title a {
+  color: #1e1e1e !important;
+}
+
 .board {
     position:relative;
 }
@@ -10,7 +18,7 @@
   margin:0px 100px;
   width: 100%;
   padding:5px;
-  border: 1px gray solid;
+  border: 1px #D0D3D4 solid;
   background-color:#ffffff;
   color:#000000;
   border-radius:5px;
@@ -33,16 +41,18 @@
   border-radius: 0;
 }
 
-.col-md-2 {
-  border: 1px gray solid;
-  border-radius: 2px;
-  width:20%;
-  float:left;
-  margin: 2px;
+
+.col-md-2-board {
+  margin-bottom: 50px;
 }
 
 hr {
 	margin: 5px;
+  border-top: 2px solid #FAFAFA;
+}
+hr.non {
+  margin: 5px;
+  border-top: 2px solid #828282;
 }
 
 .thread-container {
@@ -61,9 +71,6 @@ hr {
 
 #sortable {
   list-style-type: none;
-  margin: 0;
-  padding: 0;
-  width: 450px;
 }
 
 #sortable li {
@@ -74,4 +81,105 @@ hr {
   height: 90px;
   font-size: 1em;
   text-align: center;
+}
+
+.navbar-inverse .navbar-brand {
+  font-size: 34px;
+  font-weight: 700;
+}
+
+.nav > li > a {
+  padding: 0px;
+}
+
+.navbar-right {
+  margin-right: 10px;
+}
+
+.navbar, .navbar-inverse .navbar-brand {
+  color: #ffffff;
+}
+
+.user-nav, .navbar-inverse {
+  display: table;
+  width: 100%;
+}
+
+.user-nav-row, .navbar-nav {
+  display: table-row;
+}
+
+.user-nav-cell, .navbar-details {
+  display: table-cell;
+  vertical-align: middle;
+  padding: 10px;
+}
+
+
+.sticky-threads {
+  background-color: #BFD8D2;
+  border: 1px white solid;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.sticky-thread {
+  background-color: #E5F3F1;
+  border-radius: 3px;
+  padding: 10px;
+}
+
+.nonsticky-threads {
+  background-color: #B3C6C2;
+  border: 1px white solid;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.nonsticky-thread {
+  background-color: #FBFBFB;
+  border-radius: 3px;
+  padding: 10px;
+}
+
+.white {
+  color: #ffffff;
+}
+
+.badge-light {
+  color: #212529;
+  background-color: #f8f9fa;  
+}
+
+.badge-dark {
+  color: #fff;
+  background-color: #343a40;
+}
+
+.user-container {
+  width:100%;
+  display: table;
+}
+
+.user-details {
+  display: table-cell;
+  width:30%;
+}
+
+.user-posts {
+  display: table-cell;
+  width:70%;
+}
+
+.user-edit-info {
+  width:50%;
+  display: table-cell;
+  vertical-align: middle;
+  padding: 10px;
+}
+.user-edit-optional {
+  width:50%;
+  display: table-cell;
+  vertical-align: middle;
+  padding: 10px;
 }
