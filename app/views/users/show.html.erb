@@ -2,7 +2,7 @@
 <div class="user-container">
   <div class="user-details">
     <p><%= image_tag @user.avatar.profile.url unless @user.avatar.blank? %></p>
-    <% if current_user.moderator? || current_user.administrator? %>
+    <% if (current_user.moderator? || current_user.administrator?) && current_user != @user %>
       <% if @user.normal? %>
         <%= link_to "Ban User", manage_user_path(@user), class:"btn btn-danger" %>
       <% else %>

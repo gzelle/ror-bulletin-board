@@ -1,6 +1,7 @@
 class TopicsController < ApplicationController
   before_action :set_topic, only: [:show, :edit, :update, :destroy]
   before_action :check_admin, except: [:show, :index]
+  before_action :authenticate 
 
   # GET /topics
   # GET /topics.json
@@ -73,7 +74,10 @@ class TopicsController < ApplicationController
     if current_user.banned?
       redirect_to topics_path, notice: "You are banned from managing topics.\nContact other administrators." 
     end
+  end
 
+  def authenticate
+    redirect_to(sign_in_path) if current_user.nil?
   end
 
   private

@@ -52,7 +52,7 @@ class BoardsController < ApplicationController
     board = Board.find(params[:id])
     respond_to do |format|
       if @board.update(board_params)
-        format.html { redirect_to root_path, notice: 'Board was successfully updated.' }
+        format.html { redirect_to topics_path, notice: 'Board was successfully updated.' }
         format.json { render :show, status: :ok, location: @board }
       else
         format.html { render :edit }
@@ -67,7 +67,7 @@ class BoardsController < ApplicationController
     board = Board.find(params[:id])
     @board.destroy
     respond_to do |format|
-      format.html { redirect_to root_path, notice: 'Board was successfully destroyed.' }
+      format.html { redirect_to topics_path, notice: 'Board was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

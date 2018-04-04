@@ -1,5 +1,3 @@
-document.addEventListener("turbolinks:load", function() {
-
-	$("#sortable").sortable();
-
+$(function() {
+  $('.sortable').railsSortable();
 });

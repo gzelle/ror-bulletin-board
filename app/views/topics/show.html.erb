@@ -3,17 +3,17 @@
 <div class="container">
   <h2>Topic: <%= @topic.name %></h2><br>
 
-  
     <% boards = @topic.boards %>
     <div class="row">
       <ul id="sortable">
-        <% boards.each do |board| %>
+        <% boards.each_with_sortable_id do |board, sortable_id| %>
+        <% id=sortable_id %>
           <div class="col-md-2 col-md-2-board">
             <div class="board">
               <li>
                 <td><%= image_tag board.photo.thumb.url unless board.photo.blank? %></td>
                 <h5><%= link_to board.name, board %></h5>
-
+                <%= board.sort %>
                 <div class="tooltip">
                   <%= board.description %><br>
                   <b>Threads: </b><%= board.thread_count %><br>
